@@ -1,0 +1,25 @@
+{
+	"name": "telegram-binance-bot",
+	"version": "0.0.1",
+	"description": "A bot that gives you coin prices",
+	"main": "api/webhook.js",
+	"scripts": {
+		"test": "echo \"Error: no test specified\" && exit 1"
+	},
+	"keywords": [
+		"Telegram",
+		"Bot",
+		"Binance",
+		"Cryptocurrency"
+	],
+	"author": "Jean-François Grand",
+	"license": "ISC",
+	"dependencies": {
+		"node-binance-api": "^0.12.4",
+		"node-telegram-bot-api": "^0.51.0"
+	},
+	"devDependencies": {
+		"eslint": "^7.19.0",
+		"ngrok": "^3.4.0"
+	}
+}
