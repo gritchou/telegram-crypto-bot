@@ -1,6 +1,9 @@
 const TelegramBot = require('node-telegram-bot-api');
 const fetch = require('node-fetch');
 
+const BOT_PREFIX = '@';
+const BOT_NAME = 'CoingekoNoKyojinBot';
+
 const CRYPTO_MAP = new Map();
 const CURRENCY_MAP = new Map();
 const SUPPORTED_CURRENCIES = [];
@@ -30,40 +33,41 @@ module.exports = async (request, response) => {
 			;
 
 		if (message && message.text) {
-			if (message.text === '/help') {
+			const text = message.text.indexOf(BOT_PREFIX + BOT_NAME) >= 0 ? message.text.slice(0, BOT_PREFIX.length + BOT_NAME.length) : message.text
+			if (text === '/help') {
 				await bot.sendMessage(message.chat.id, COMMANDS);
-			} else if (message.text === '/usage') {
+			} else if (text === '/usage') {
 				await bot.sendMessage(message.chat.id, EXAMPLE);
-			} else if (message.text === '/coins') {
+			} else if (text === '/coins') {
 				await bot.sendMessage(message.chat.id, CRYPTO_MAP.size + ' coins supported.');
-			} else if (message.text === '/currencies') {
+			} else if (text === '/currencies') {
 				await bot.sendMessage(message.chat.id, 'Supported currencies: ' + SUPPORTED_CURRENCIES.join(', ') + ".");
-			} else if (message.text === '/btc') {
+			} else if (text === '/btc') {
 				await fetch('https://api.coingecko.com/api/v3/coins/bitcoin')
 					.then((response) => response.json())
 					.then((coin) => bot.sendMessage(message.chat.id, coin.market_data.current_price.usd + ' $'))
 					;
-			} else if (message.text === '/eth') {
+			} else if (text === '/eth') {
 				await fetch('https://api.coingecko.com/api/v3/coins/ethereum')
 					.then((response) => response.json())
 					.then((coin) => bot.sendMessage(message.chat.id, coin.market_data.current_price.usd + ' $'))
 					;
-			} else if (message.text === '/api') {
+			} else if (text === '/api') {
 				await bot.sendMessage(message.chat.id, 'This bot uses CoinGecko API and localeplanet currencymap.');
-			} else if (message.text === '/author') {
+			} else if (text === '/author') {
 				await bot.sendMessage(message.chat.id, 'twitter.com/gritchou');
-			} else if (message.text.startsWith('/')) {
-				const query = message.text.slice(1).toLowerCase();
+			} else if (text.startsWith('/')) {
+				const query = text.slice(1).toLowerCase();
 				let currency = query.slice(-4);
 				if (!SUPPORTED_CURRENCIES.includes(currency)) {
 					currency = query.slice(-3);
 				}
 				if (!SUPPORTED_CURRENCIES.includes(currency)) {
-					await bot.sendMessage(message.chat.id, 'Invalid token pair: ' + message.text.slice(1));
+					await bot.sendMessage(message.chat.id, 'Invalid token pair: ' + text.slice(1));
 				}
 				let coin = query.slice(0, query.length - currency.length);
 				if (!CRYPTO_MAP.has(coin)) {
-					await bot.sendMessage(message.chat.id, 'Invalid token pair: ' + message.text.slice(1));
+					await bot.sendMessage(message.chat.id, 'Invalid token pair: ' + text.slice(1));
 				}
 				await fetch('https://api.coingecko.com/api/v3/coins/' + CRYPTO_MAP.get(coin).id)
 					.then((response) => response.json())
