@@ -15,7 +15,7 @@
 	"author": "Jean-François Grand",
 	"license": "ISC",
 	"dependencies": {
-		"node-binance-api": "^0.12.4",
+		"node-fetch": "^2.6.1",
 		"node-telegram-bot-api": "^0.51.0"
 	},
 	"devDependencies": {
