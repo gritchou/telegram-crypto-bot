@@ -2,7 +2,6 @@ const TelegramBot = require('node-telegram-bot-api');
 const fetch = require('node-fetch');
 
 const BOT_PREFIX = '@';
-const BOT_NAME = 'CoingekoNoKyojinBot';
 
 const CRYPTO_MAP = new Map();
 const CURRENCY_MAP = new Map();
@@ -33,7 +32,9 @@ module.exports = async (request, response) => {
 			;
 
 		if (message && message.text) {
-			const text = message.text.indexOf(BOT_PREFIX + BOT_NAME) >= 0 ? message.text.slice(0, BOT_PREFIX.length + BOT_NAME.length) : message.text
+			const isGroupCommand = () => message.text.indexOf(BOT_PREFIX) > 0;
+			// This is to handle messages such as btc@YourBotName in groups
+			const text = isGroupCommand() ? message.text.slice(0, message.text.indexOf(BOT_PREFIX)) : message.text;
 			if (text === '/commands') {
 				await bot.sendMessage(message.chat.id, COMMANDS);
 			} else if (text === '/usage') {

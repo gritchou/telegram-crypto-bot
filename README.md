@@ -9,7 +9,6 @@ usage: `/`${`COIN`}${`CURRENCY`}
 ## Envrionment variable
 
 `BOT_TOKEN`: the Token given by BotFather you when you create your bot on Telegram.
-`BOT_NAME`: you'll need to update webhook.js with your bot name, this is to allow use of commands such as help@YourBotName in groups.
 
 ## Vercel devmode
 
