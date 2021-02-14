@@ -8,7 +8,7 @@ const CRYPTO_MAP = new Map();
 const CURRENCY_MAP = new Map();
 const SUPPORTED_CURRENCIES = [];
 
-const COMMANDS = `/help - lists bot commands\n/usage - get examples\n/btc - shorthand for BTCUSD\n/eth - shorthand for ETHUSD\n/coins - get the number of supported coins\n/currencies - get the list of the supported currencies\n/api - get the API used by this bot\n/author - me`;
+const COMMANDS = `/commands - lists bot commands\n/usage - get examples\n/btc - shorthand for BTCUSD\n/eth - shorthand for ETHUSD\n/coins - get the number of supported coins\n/currencies - get the list of the supported currencies\n/api - get the API used by this bot\n/author - me`;
 const EXAMPLE = `Example usage: /\${COIN}\${CURRENCY} case insensitive\n/BTCUSD\n/etheur\n/dogeBTC\n/VETusd`;
 
 module.exports = async (request, response) => {
@@ -34,7 +34,7 @@ module.exports = async (request, response) => {
 
 		if (message && message.text) {
 			const text = message.text.indexOf(BOT_PREFIX + BOT_NAME) >= 0 ? message.text.slice(0, BOT_PREFIX.length + BOT_NAME.length) : message.text
-			if (text === '/help') {
+			if (text === '/commands') {
 				await bot.sendMessage(message.chat.id, COMMANDS);
 			} else if (text === '/usage') {
 				await bot.sendMessage(message.chat.id, EXAMPLE);
