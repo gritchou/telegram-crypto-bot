@@ -7,7 +7,7 @@ const CRYPTO_MAP = new Map();
 const CURRENCY_MAP = new Map();
 const SUPPORTED_CURRENCIES = [];
 
-const COMMANDS = `/commands - lists bot commands\n/usage - get examples\n/btc - shorthand for BTCUSD\n/eth - shorthand for ETHUSD\n/coins - get the number of supported coins\n/currencies - get the list of the supported currencies\n/api - get the API used by this bot\n/author - me`;
+const COMMANDS = `/commands - lists bot commands\n/usage - get examples\n/btc - shorthand for BTCUSD\n/eth - shorthand for ETHUSD\n/coins - get the number of supported coins\n/currencies - get the list of the supported currencies\n/api - get the API used by this bot\n/code - github repository\n/author - me`;
 const EXAMPLE = `Example usage: /\${COIN}\${CURRENCY} case insensitive\n/BTCUSD\n/etheur\n/dogeBTC\n/VETusd`;
 
 module.exports = async (request, response) => {
@@ -55,6 +55,8 @@ module.exports = async (request, response) => {
 					;
 			} else if (text === '/api') {
 				await bot.sendMessage(message.chat.id, 'This bot uses CoinGecko API and localeplanet currencymap.');
+			} else if (text === '/code') {
+				await bot.sendMessage(message.chat.id, 'https://github.com/gritchou/telegram-crypto-bot');
 			} else if (text === '/author') {
 				await bot.sendMessage(message.chat.id, 'twitter.com/gritchou');
 			} else if (text.startsWith('/')) {
