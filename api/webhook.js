@@ -35,7 +35,7 @@ module.exports = async (request, response) => {
 			const isGroupCommand = () => message.text.indexOf(BOT_PREFIX) > 0;
 			// This is to handle messages such as btc@YourBotName in groups
 			const text = isGroupCommand() ? message.text.slice(0, message.text.indexOf(BOT_PREFIX)) : message.text;
-			if (text === '/commands') {
+			if (text === '/commands' || text === '/start') {
 				await bot.sendMessage(message.chat.id, COMMANDS);
 			} else if (text === '/usage') {
 				await bot.sendMessage(message.chat.id, EXAMPLE);
@@ -61,21 +61,20 @@ module.exports = async (request, response) => {
 				await bot.sendMessage(message.chat.id, 'twitter.com/gritchou');
 			} else if (text.startsWith('/')) {
 				const query = text.slice(1).toLowerCase();
-				let currency = query.slice(-4);
-				if (!SUPPORTED_CURRENCIES.includes(currency)) {
-					currency = query.slice(-3);
+				if (query && query.length <= 8) {
+					let currency = query.slice(-4);
+					if (!SUPPORTED_CURRENCIES.includes(currency)) {
+						currency = query.slice(-3);
+					}
+					let coin = query.slice(0, query.length - currency.length);
+					if (!SUPPORTED_CURRENCIES.includes(currency) || !CRYPTO_MAP.has(coin)) {
+						await bot.sendMessage(message.chat.id, 'Invalid token pair: ' + text.slice(1));
+					}
+					await fetch('https://api.coingecko.com/api/v3/coins/' + CRYPTO_MAP.get(coin).id)
+						.then((response) => response.json())
+						.then((coin) => bot.sendMessage(message.chat.id, coin.market_data.current_price[currency] + ' ' + CURRENCY_MAP.get(currency)))
+						;
 				}
-				if (!SUPPORTED_CURRENCIES.includes(currency)) {
-					await bot.sendMessage(message.chat.id, 'Invalid token pair: ' + text.slice(1));
-				}
-				let coin = query.slice(0, query.length - currency.length);
-				if (!CRYPTO_MAP.has(coin)) {
-					await bot.sendMessage(message.chat.id, 'Invalid token pair: ' + text.slice(1));
-				}
-				await fetch('https://api.coingecko.com/api/v3/coins/' + CRYPTO_MAP.get(coin).id)
-					.then((response) => response.json())
-					.then((coin) => bot.sendMessage(message.chat.id, coin.market_data.current_price[currency] + ' ' + CURRENCY_MAP.get(currency)))
-					;
 			}
 		}
 	}
