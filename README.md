@@ -1,4 +1,4 @@
-# Telegram Binance Bot
+# Telegram Crypto Bot
 
 A bot that can retrieve coins prices.
 
@@ -34,4 +34,4 @@ NTBA_FIX_319=test vercel dev
 - /coins - get the number of supported coins
 - /currencies - get the list of the supported currencies
 - /api - get the API used by this bot
-- /author me
+- /author - me
