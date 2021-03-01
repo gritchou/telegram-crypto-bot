@@ -68,7 +68,7 @@ module.exports = async (request, response) => {
 					}
 					let coin = query.slice(0, query.length - currency.length);
 					if (!SUPPORTED_CURRENCIES.includes(currency) || !CRYPTO_MAP.has(coin)) {
-						await bot.sendMessage(message.chat.id, 'Invalid token pair: ' + text.slice(1));
+						await bot.sendMessage(message.chat.id, 'Invalid token pair or command: ' + text.slice(1));
 					}
 					await fetch('https://api.coingecko.com/api/v3/coins/' + CRYPTO_MAP.get(coin).id)
 						.then((response) => response.json())

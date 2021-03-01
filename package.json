@@ -3,13 +3,9 @@
 	"version": "0.0.1",
 	"description": "A bot that gives you coin prices",
 	"main": "api/webhook.js",
-	"scripts": {
-		"test": "echo \"Error: no test specified\" && exit 1"
-	},
 	"keywords": [
 		"Telegram",
 		"Bot",
-		"Binance",
 		"Cryptocurrency"
 	],
 	"author": "Jean-François Grand",
